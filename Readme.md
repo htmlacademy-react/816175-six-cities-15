@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Ольга Шашкова](https://up.htmlacademy.ru/react/15/user/816175).
-* Наставник: `Неизвестно`.
+* Наставник: [Arthur Litovko](https://htmlacademy.ru/profile/id6927).
 
 ---
 
