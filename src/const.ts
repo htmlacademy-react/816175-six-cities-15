@@ -3,7 +3,7 @@ export const Settings = {
 };
 
 export const Data = [{
-  name: 123,
+  name: 'Wood and stone place',
   type: 'Apartment',
   link: '#',
   price: 120,

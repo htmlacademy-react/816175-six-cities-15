@@ -1,4 +1,4 @@
-function Footer () {
+function Footer() {
   return (
     <footer className="footer container">
       <a className="footer__logo-link" href="main.html">
