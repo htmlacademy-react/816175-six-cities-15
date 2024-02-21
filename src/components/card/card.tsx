@@ -1,40 +1,53 @@
-type CardProps = {
-  environment: string;
-  name: string;
-  type: string;
-  link: string;
-  price: number;
-  rating: number;
-  isPremium: boolean;
-  isFavorite: boolean;
-  img: string;
+import classNames from 'classnames';
+import { ServerOffer } from '../../types/offer';
+
+type CardProps = ServerOffer & {
+  // все данные для карточки описаны в ServerOffer
+  environment: 'cities' | 'favorites';
 }
 
-function Card(props: CardProps) {
-  const img = {
-    width: props.environment === 'cities' ? 260 : 150,
-    height: props.environment === 'cities' ? 200 : 110
-  };
+// размеры картинки
+const ImgSize = {
+  cities: {
+    width: 260,
+    height: 200
+  },
+  favorites: {
+    width: 150,
+    height: 110
+  }
+};
 
+function Card({
+  // деструктуризация пропсов: нужна для понимания, какие свойства используются в компоненте
+  environment,
+  title,
+  type,
+  price,
+  isFavorite = false,
+  isPremium = false,
+  rating,
+  previewImage
+}: CardProps) {
   return (
-    <article className={`${props.environment}__card place-card`}>
-      {props.isPremium && (
+    <article className={`${environment}__card place-card`}>
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>)}
 
-      <div className={`${props.environment}__image-wrapper place-card__image-wrapper`}>
-        <a href={props.link}>
-          <img className="place-card__image" src={props.img} width={img.width} height={img.height} alt={props.name} />
+      <div className={`${environment}__image-wrapper place-card__image-wrapper`}>
+        <a href="#">
+          <img className="place-card__image" src={previewImage} width={ImgSize[environment].width} height={ImgSize[environment].height} alt={title} />
         </a>
       </div>
-      <div className={`${props.environment}__card-info place-card__info`}>
+      <div className={`${environment}__card-info place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{props.price}</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${props.isFavorite ? 'place-card__bookmark-button--active' : ''}`} type="button">
+          <button className={classNames('button', 'place-card__bookmark-button', {'place-card__bookmark-button--active': isFavorite})} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -43,14 +56,14 @@ function Card(props: CardProps) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${props.rating}%` }}></span>
+            <span style={{ width: `${rating}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={props.link}>{props.name}</a>
+          <a href="#">{title}</a>
         </h2>
-        <p className="place-card__type">{props.type}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );

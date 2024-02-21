@@ -2,9 +2,11 @@ import Header from '../../components/header/header';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
 
-import { Data } from '../../const';
+import { mockOffer } from '../../mock/offer';
 
 function Favorites() {
+  const offers = Array.from({length: 2}, mockOffer);
+
   return (
     <div className="page">
       <Header />
@@ -23,8 +25,8 @@ function Favorites() {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <Card environment="favorites" {...Data[1]} />
-                  <Card environment="favorites" {...Data[2]} />
+                  <Card environment="favorites" {...offers[0]} />
+                  <Card environment="favorites" {...offers[1]} />
                 </div>
               </li>
 
@@ -37,7 +39,7 @@ function Favorites() {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <Card environment="favorites" {...Data[1]} />
+                  <Card environment="favorites" {...offers[0]} />
                 </div>
               </li>
             </ul>

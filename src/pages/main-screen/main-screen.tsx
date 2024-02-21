@@ -1,12 +1,14 @@
 import Header from '../../components/header/header';
 import Card from '../../components/card/card';
-import { Data } from '../../const';
+import { mockOffer } from '../../mock/offer';
 
-type MainScreen = {
+export type MainScreenProps = {
   resultCount: number;
 }
 
-function MainScreen(props: MainScreen): JSX.Element {
+function MainScreen({resultCount}: MainScreenProps): JSX.Element {
+  const mockOffers = Array.from({length: resultCount}, mockOffer);
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -53,7 +55,7 @@ function MainScreen(props: MainScreen): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{props.resultCount} places to stay in Amsterdam</b>
+              <b className="places__found">{resultCount} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by </span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -70,8 +72,8 @@ function MainScreen(props: MainScreen): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {Data.map((item, index) => (
-                  <Card environment="cities" key={`${item.type + index}`} {...item} />
+                {mockOffers.map((item) => (
+                  <Card key={item.id} environment="cities" {...item} />
                 ))}
               </div>
             </section>

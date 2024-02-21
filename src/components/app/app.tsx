@@ -1,12 +1,10 @@
-import MainScreen from '../../pages/main-screen/main-screen';
+import MainScreen, {type MainScreenProps} from '../../pages/main-screen/main-screen';
 
-type AppProps = {
-  resultCount: number;
-}
+type AppProps = MainScreenProps;
 
-function App(props: AppProps) {
+function App({resultCount}: AppProps) {
   return (
-    <MainScreen resultCount={props.resultCount} />
+    <MainScreen resultCount={resultCount} />
   );
 }
 
