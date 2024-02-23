@@ -1,48 +1,65 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainScreen, {type MainScreenProps} from '../../pages/main-screen/main-screen';
-import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
-import Login from '../../pages/login-screen/login-screen';
-import Offer from '../../pages/offer/offer';
-import NotFound from '../../pages/not-found/not-found';
-import { AppRoute, AuthorizationStatus } from '../../constants/constants';
-import PrivateRoute from '../private-route/private-route';
-import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus, CITIES } from '../../constants/constants';
+import { PrivateRoute, PublicRoute } from '../routes/routes';
+
+import { MainScreen, type MainScreenProps } from '../../pages/main-screen/main-screen';
+import { FavoritesScreen } from '../../pages/favorites-screen/favorites-screen';
+import { LoginScreen } from '../../pages/login-screen/login-screen';
+import { OfferScreen } from '../../pages/offer-screen/offer-screen';
+import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 
 type AppProps = MainScreenProps;
 
 function App({resultCount}: AppProps) {
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
+    <BrowserRouter>
+      <Routes>
+
+        {/* главная страница '/' перенаправляет на страницу первого города в списке  */}
+        <Route path={AppRoute.Main}>
           <Route
-            path={AppRoute.Main}
-            element={<MainScreen resultCount={resultCount} />}
+            index
+            element={<Navigate to={CITIES[0].slug}/>}
           />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <FavoritesScreen/>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<Login/>}
-          />
-          <Route
-            path={AppRoute.Offer}
-            element={<Offer/>}
-          />
-          <Route
-            path='*'
-            element={<NotFound/>}
-          />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+
+          {/* генерация страниц городов: '/paris', '/cologne' и др */}
+          {CITIES.map((city) => (
+            <Route
+              key={city.slug}
+              path={`/:${city.slug}`}
+              element={<MainScreen resultCount={resultCount}/>}
+            />
+          ))}
+        </Route>
+
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <FavoritesScreen/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element={
+            <PublicRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <LoginScreen />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Offer}
+          element={<OfferScreen/>}
+        >
+        </Route>
+        <Route
+          path='*'
+          element={<NotFoundScreen/>}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default App;
+export { App };

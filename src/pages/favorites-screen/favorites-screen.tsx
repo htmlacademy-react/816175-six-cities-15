@@ -1,61 +1,57 @@
-import Header from '../../components/header/header';
-import Card from '../../components/card/card';
-import Footer from '../../components/footer/footer';
-import { Helmet } from 'react-helmet-async';
-
+import { Header } from '../../components/header/header';
+import { Card } from '../../components/card/card';
+import { Footer } from '../../components/footer/footer';
 import { mockOffer } from '../../mock/offer';
+import { useDocumentTitle } from '../../hooks/document-title';
 
 function FavoritesScreen() {
+  useDocumentTitle('favorites');
+
   const offers = Array.from({length: 2}, mockOffer);
 
   return (
-    <>
-      <Helmet>
-        <title>6 cities: избранное</title>
-      </Helmet>
+    <div className="page">
+      <Header />
 
-      <div className="page">
-        <Header />
+      {/* Блок вставляется, когда в избранном что-то есть */}
+      <main className="page__main page__main--favorites">
+        <div className="page__favorites-container container">
+          <section className="favorites">
+            <h1 className="favorites__title">Saved listing</h1>
+            <ul className="favorites__list">
+              <li className="favorites__locations-items">
+                <div className="favorites__locations locations locations--current">
+                  <div className="locations__item">
+                    <a className="locations__item-link" href="#">
+                      <span>Amsterdam</span>
+                    </a>
+                  </div>
+                </div>
+                <div className="favorites__places">
+                  <Card environment="favorites" {...offers[0]} />
+                  <Card environment="favorites" {...offers[1]} />
+                </div>
+              </li>
 
-        {/* Блок вставляется, когда в избранном что-то есть */}
-        <main className="page__main page__main--favorites">
-          <div className="page__favorites-container container">
-            <section className="favorites">
-              <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
-                <li className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>Amsterdam</span>
-                      </a>
-                    </div>
+              <li className="favorites__locations-items">
+                <div className="favorites__locations locations locations--current">
+                  <div className="locations__item">
+                    <a className="locations__item-link" href="#">
+                      <span>Cologne</span>
+                    </a>
                   </div>
-                  <div className="favorites__places">
-                    <Card environment="favorites" {...offers[0]} />
-                    <Card environment="favorites" {...offers[1]} />
-                  </div>
-                </li>
+                </div>
+                <div className="favorites__places">
+                  <Card environment="favorites" {...offers[0]} />
+                </div>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </main>
 
-                <li className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>Cologne</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="favorites__places">
-                    <Card environment="favorites" {...offers[0]} />
-                  </div>
-                </li>
-              </ul>
-            </section>
-          </div>
-        </main>
-
-        {/* Блок вставляется, когда избранное пусто */}
-        {/* <main className="page__main page__main--favorites page__main--favorites-empty">
+      {/* Блок вставляется, когда избранное пусто */}
+      {/* <main className="page__main page__main--favorites page__main--favorites-empty">
           <div className="page__favorites-container container">
             <section className="favorites favorites--empty">
               <h1 className="visually-hidden">Favorites (empty)</h1>
@@ -67,10 +63,9 @@ function FavoritesScreen() {
           </div>
         </main> */}
 
-        <Footer />
-      </div>
-    </>
+      <Footer />
+    </div>
   );
 }
 
-export default FavoritesScreen;
+export { FavoritesScreen };

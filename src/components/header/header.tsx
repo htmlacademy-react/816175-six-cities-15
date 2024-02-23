@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Logo from '../logo/logo';
+import { Logo } from '../logo/logo';
 
 function Header() {
   return (
@@ -32,4 +32,4 @@ function Header() {
   );
 }
 
-export default Header;
+export { Header };

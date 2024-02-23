@@ -11,11 +11,11 @@ const mockLocation = (): ServerLocation => ({
 });
 
 const mockCity = (): ServerCity => ({
-  name: faker.helpers.arrayElement(CITIES),
+  name: faker.helpers.arrayElement(CITIES).name,
   location: mockLocation()
 });
 
-export const mockGetOffer = (): number => faker.number.int({ min: 1, max: 7 });
+export const mockGetOffersAmout = (): number => faker.number.int({ min: 1, max: 7 });
 
 export const mockOffer = (): ServerOffer => ({
   id: faker.string.uuid(),

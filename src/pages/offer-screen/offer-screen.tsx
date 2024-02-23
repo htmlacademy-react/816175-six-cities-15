@@ -1,6 +1,6 @@
-import Header from '../../components/header/header';
+import { Header } from '../../components/header/header';
 
-function Offer() {
+function OfferScreen() {
   return (
     <div className="page">
       <Header />
@@ -311,4 +311,4 @@ function Offer() {
   );
 }
 
-export default Offer;
+export { OfferScreen };

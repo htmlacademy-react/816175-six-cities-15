@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { ServerOffer } from '../../types/offer';
+import { Link } from 'react-router-dom';
 
 type CardProps = ServerOffer & {
   // все данные для карточки описаны в ServerOffer
@@ -20,6 +21,7 @@ const ImgSize = {
 
 function Card({
   // деструктуризация пропсов: нужна для понимания, какие свойства используются в компоненте
+  id,
   environment,
   title,
   type,
@@ -37,9 +39,9 @@ function Card({
         </div>)}
 
       <div className={`${environment}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width={ImgSize[environment].width} height={ImgSize[environment].height} alt={title} />
-        </a>
+        </Link>
       </div>
       <div className={`${environment}__card-info place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -61,7 +63,7 @@ function Card({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -69,4 +71,4 @@ function Card({
   );
 }
 
-export default Card;
+export { Card };
