@@ -1,57 +1,42 @@
-import Header from '../../components/header/header';
-import Card from '../../components/card/card';
+import classNames from 'classnames';
+import { useDocumentTitle } from '../../hooks/document-title';
+import { Header } from '../../components/header/header';
+import { Card } from '../../components/card/card';
 import { mockOffer } from '../../mock/offer';
+import { CITIES } from '../../constants/constants';
+import { NavLink } from 'react-router-dom';
 
 export type MainScreenProps = {
   resultCount: number;
 }
 
 function MainScreen({resultCount}: MainScreenProps): JSX.Element {
+  useDocumentTitle('search results');
+
   const mockOffers = Array.from({length: resultCount}, mockOffer);
 
   return (
     <div className="page page--gray page--main">
       <Header />
-
       <main className="page__main page__main--index">
+
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {CITIES.map((city) => (
+                <li key={city.name} className="locations__item">
+                  <NavLink to={`/${city.slug}`} className={({isActive}) => classNames('locations__item-link tabs__item', {'tabs__item--active': isActive})}>
+                    <span>{city.name}</span>
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
         <div className="cities">
+          {/* Блок вставляется в случае, когда найдены офферы */}
+
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
@@ -81,10 +66,21 @@ function MainScreen({resultCount}: MainScreenProps): JSX.Element {
               <section className="cities__map map"></section>
             </div>
           </div>
+
+          {/* Блок вставляется в случае, когда офферы не найдены */}
+          {/* <div className="cities__places-container cities__places-container--empty container">
+              <section className="cities__no-places">
+                <div className="cities__status-wrapper tabs__content">
+                  <b className="cities__status">No places to stay available</b>
+                  <p className="cities__status-description">We could not find any property available at the moment in Dusseldorf</p>
+                </div>
+              </section>
+              <div className="cities__right-section"></div>
+            </div> */}
         </div>
       </main>
     </div>
   );
 }
 
-export default MainScreen;
+export { MainScreen };

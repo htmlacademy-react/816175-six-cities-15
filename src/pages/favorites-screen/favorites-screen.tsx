@@ -1,16 +1,19 @@
-import Header from '../../components/header/header';
-import Card from '../../components/card/card';
-import Footer from '../../components/footer/footer';
-
+import { Header } from '../../components/header/header';
+import { Card } from '../../components/card/card';
+import { Footer } from '../../components/footer/footer';
 import { mockOffer } from '../../mock/offer';
+import { useDocumentTitle } from '../../hooks/document-title';
 
-function Favorites() {
+function FavoritesScreen() {
+  useDocumentTitle('favorites');
+
   const offers = Array.from({length: 2}, mockOffer);
 
   return (
     <div className="page">
       <Header />
 
+      {/* Блок вставляется, когда в избранном что-то есть */}
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -47,9 +50,22 @@ function Favorites() {
         </div>
       </main>
 
+      {/* Блок вставляется, когда избранное пусто */}
+      {/* <main className="page__main page__main--favorites page__main--favorites-empty">
+          <div className="page__favorites-container container">
+            <section className="favorites favorites--empty">
+              <h1 className="visually-hidden">Favorites (empty)</h1>
+              <div className="favorites__status-wrapper">
+                <b className="favorites__status">Nothing yet saved.</b>
+                <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
+              </div>
+            </section>
+          </div>
+        </main> */}
+
       <Footer />
     </div>
   );
 }
 
-export default Favorites;
+export { FavoritesScreen };
